@@ -13,21 +13,15 @@ public:
         : argv_(std::move(argv)) {
     }
 
-    void print_help(std::ostream& out) const override {
-        out << "usage: " << argv_.cmd();
-        if (has_flags()) {
-            out << " [FLAGS]";
-        }
+    void print_long_help(std::ostream& out) const override {
+        print_short_help(out);
+        Options<Programm>::print_long_help(out);
+    }
 
-        if (has_arguments()) {
-            out << " [ARGUMENTS]";
-        }
-
-        if (has_subcommands()) {
-            out << " [COMMAND]";
-        }
-
-        Options<Programm>::print_help(out);
+    void print_short_help(std::ostream& out) const override {
+        out << "usage: " << argv_.cmd() << ' ';
+        Options<Programm>::print_short_help(out);
+        out << '\n';
     }
 
 private:

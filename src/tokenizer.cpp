@@ -1,4 +1,4 @@
-#include <xdx/cliopts/parser.hpp>
+#include <xdx/cliopts/tokenizer.hpp>
 
 namespace xdx::cliopts
 {
@@ -6,11 +6,13 @@ namespace xdx::cliopts
 constexpr char arg_prefix = '-';
 constexpr char val_split = '=';
 
-std::pair<bool, Parser::Token> Parser::next() {
+using Token = Tokenizer::Token;
+
+std::pair<bool, Token> Tokenizer::next() {
     if (char_idx_ < 0) {
         entry_idx_ += 1;
         if (entry_idx_ >= argv_.size()) {
-            return {false, {}};
+            return {false, {TokenType::Unknown, {}}};
         }
         current_entry_ = argv_[entry_idx_];
         char_idx_ = 0;

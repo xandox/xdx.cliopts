@@ -6,38 +6,26 @@
 namespace xdx::cliopts
 {
 
-class FlagBase
+struct iFlag
+{
+    virtual ~iFlag() = default;
+    virtual char get_short_name() const noexcept = 0;
+    virtual std::string_view get_long_name() const noexcept = 0;
+    virtual std::string_view get_description() const noexcept = 0;
+    virtual bool is_countable() const noexcept = 0;
+    virtual void set_found() noexcept = 0;
+};
+
+class FlagBase : public iFlag
 {
 public:
-    FlagBase(const std::string_view& long_name, const std::string_view& description)
-        : long_name_{long_name}
-        , description_{description} {
-    }
+    FlagBase(const std::string_view& long_name, const std::string_view& description);
+    FlagBase(char short_name, const std::string_view& description);
+    FlagBase(char short_name, const std::string_view& long_name, const std::string_view& description);
 
-    FlagBase(char short_name, const std::string_view& description)
-        : short_name_{short_name}
-        , description_{description} {
-    }
-
-    FlagBase(char short_name, const std::string_view& long_name, const std::string_view& description)
-        : short_name_{short_name}
-        , long_name_{long_name}
-        , description_{description} {
-    }
-
-    char short_name() const {
-        return short_name_;
-    }
-
-    std::string_view long_name() const {
-        return long_name_;
-    }
-
-    std::string_view get_description() const {
-        return description_;
-    }
-
-    virtual void set_found() = 0;
+    char get_short_name() const noexcept override;
+    std::string_view get_long_name() const noexcept override;
+    std::string_view get_description() const noexcept override;
 
 private:
     char short_name_ = '\0';
@@ -49,20 +37,13 @@ private:
 class Flag : public FlagBase
 {
 public:
-    Flag(const std::string_view& long_name, const std::string_view& description)
-        : FlagBase{long_name, description} {
-    }
+    Flag(const std::string_view& long_name, const std::string_view& description);
+    Flag(char short_name, const std::string_view& description);
+    Flag(char short_name, const std::string_view& long_name, const std::string_view& description);
 
-    Flag(char short_name, const std::string_view& description)
-        : FlagBase{short_name, description} {
-    }
-
-    Flag(char short_name, const std::string_view& long_name, const std::string_view& description)
-        : FlagBase{short_name, long_name, description} {
-    }
-
-    void set_found() final {
-        was_ = true;
+    void set_found() noexcept final;
+    bool is_countable() const noexcept {
+        return false;
     }
 
 private:
@@ -72,20 +53,12 @@ private:
 class FlagCount : public FlagBase
 {
 public:
-    FlagCount(const std::string_view& long_name, const std::string_view& description)
-        : FlagBase{long_name, description} {
-    }
-
-    FlagCount(char short_name, const std::string_view& description)
-        : FlagBase{short_name, description} {
-    }
-
-    FlagCount(char short_name, const std::string_view& long_name, const std::string_view& description)
-        : FlagBase{short_name, long_name, description} {
-    }
-
-    void set_found() final {
-        was_ += 1;
+    FlagCount(const std::string_view& long_name, const std::string_view& description);
+    FlagCount(char short_name, const std::string_view& description);
+    FlagCount(char short_name, const std::string_view& long_name, const std::string_view& description);
+    void set_found() noexcept final;
+    bool is_countable() const noexcept {
+        return true;
     }
 
 private:

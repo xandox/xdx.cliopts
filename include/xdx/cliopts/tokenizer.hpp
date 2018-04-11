@@ -5,7 +5,7 @@
 namespace xdx::cliopts
 {
 
-class Parser
+class Tokenizer
 {
 public:
     enum TokenType
@@ -22,7 +22,7 @@ public:
         std::variant<char, std::string_view> value;
     };
 
-    Parser(Argv& argv)
+    Tokenizer(Argv& argv)
         : argv_(argv) {
     }
 

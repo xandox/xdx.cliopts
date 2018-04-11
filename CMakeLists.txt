@@ -10,17 +10,27 @@ xdx_project(
     NAMESPCE xdx::cliopts
     INCLUDE
         details/from_string.hpp
-        argv.hpp
         argument.hpp
+        argv.hpp
+        builder.hpp
+        cliopts.hpp
+        details
+        error.hpp
         flag.hpp
         options.hpp
-        parser.hpp
-        cliopts.hpp
+        printer.hpp
+        programm.hpp
+        subcommand.hpp
+        tokenizer.hpp
     SOURCES
         cliopts.cpp
-        parser.cpp
+        error.cpp
+        flag.cpp
+        options.cpp
+        printer.cpp
+        tokenizer.cpp
     TESTS
-        parser.tests.cpp
+        tokenizer.tests.cpp
         options.tests.cpp
         cliopts.tests.cpp
 )
