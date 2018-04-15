@@ -37,4 +37,9 @@ inline Parser::ProcessResult parse_argv(const OptionsPtr& options, int argc, con
     return parser.process({argc, argv});
 }
 
+inline Parser::ProcessResult parse_argv(const OptionsPtr& options, Argv&& argv) {
+    Parser parser(options);
+    return parser.process(std::move(argv));
+}
+
 }  // namespace xdx::cliopts
