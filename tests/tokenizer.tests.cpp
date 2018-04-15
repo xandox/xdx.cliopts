@@ -3,7 +3,7 @@
 
 using namespace xdx::cliopts;
 
-TEST(xdx_cliopts_parser_tests, tokenize_simple) {
+TEST(xdx_cliopts_tokenizer_tests, tokenize_simple) {
     const char* arguments[] = {"program", "a", "b", "c"};
     Argv argv((int)std::size(arguments), arguments);
     Tokenizer parser(argv);
@@ -68,22 +68,22 @@ void test_short(int argc, const char** argv) {
     }
 }
 
-TEST(xdx_cliopts_parser_tests, tokenize_short_all_separted) {
+TEST(xdx_cliopts_tokenizer_tests, tokenize_short_all_separted) {
     const char* arguments[] = {"program", "-a", "-b", "-c"};
     ASSERT_NO_FATAL_FAILURE(test_short(static_cast<int>(std::size(arguments)), arguments));
 }
 
-TEST(xdx_cliopts_parser_tests, tokenize_short_all_in_one) {
+TEST(xdx_cliopts_tokenizer_tests, tokenize_short_all_in_one) {
     const char* arguments[] = {"program", "-abc"};
     ASSERT_NO_FATAL_FAILURE(test_short(static_cast<int>(std::size(arguments)), arguments));
 }
 
-TEST(xdx_cliopts_parser_tests, tokenize_short_mixed) {
+TEST(xdx_cliopts_tokenizer_tests, tokenize_short_mixed) {
     const char* arguments[] = {"program", "-ab", "-c"};
     ASSERT_NO_FATAL_FAILURE(test_short(static_cast<int>(std::size(arguments)), arguments));
 }
 
-TEST(xdx_cliopts_parser_tests, tokenize_long_and_none) {
+TEST(xdx_cliopts_tokenizer_tests, tokenize_long_and_none) {
     const char* arguments[] = {"program", "--long-name", "separate-value", "--long-name-2=value", "-mistype=value"};
     Argv args(static_cast<int>(std::size(arguments)), arguments);
     Tokenizer parser(args);

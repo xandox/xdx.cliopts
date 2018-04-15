@@ -23,14 +23,14 @@ xdx_project(
         subcommand.hpp
         tokenizer.hpp
     SOURCES
-        cliopts.cpp
         error.cpp
         flag.cpp
         options.cpp
         printer.cpp
         tokenizer.cpp
+        parser.cpp
     TESTS
         tokenizer.tests.cpp
         options.tests.cpp
-        cliopts.tests.cpp
+        parser.tests.cpp
 )

@@ -23,6 +23,7 @@ struct iArgument
     virtual bool has_default_value() const noexcept = 0;
     virtual bool is_required() const noexcept = 0;
     virtual bool is_many_values() const noexcept = 0;
+    virtual void reset_to_default() noexcept = 0;
     virtual std::pair<bool, std::string> set_string_value(const std::string_view& value) noexcept = 0;
 };
 
@@ -124,8 +125,16 @@ public:
         default_value_ = v;
     }
 
+    ValueType get_value() const noexcept {
+        return value_ ? *value_ : *default_value_;
+    }
+
     bool is_many_values() const noexcept override {
         return false;
+    }
+
+    void reset_to_default() noexcept final {
+        value_.reset();
     }
 
 private:
@@ -187,6 +196,14 @@ public:
 
     bool is_many_values() const noexcept override {
         return true;
+    }
+
+    std::vector<ValueType> get_values() const noexcept {
+        return !values_.empty() ? values_ : std::vector<ValueType>{*default_value_};
+    }
+
+    void reset_to_default() noexcept final {
+        values_.clear();
     }
 
 private:

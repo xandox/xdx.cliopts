@@ -20,6 +20,14 @@ public:
     {
         TokenType type = TokenType::Unknown;
         std::variant<char, std::string_view> value;
+
+        char get_short() const {
+            return std::get<char>(value);
+        }
+
+        std::string_view get_long() const {
+            return std::get<std::string_view>(value);
+        }
     };
 
     Tokenizer(Argv& argv)

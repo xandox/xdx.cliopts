@@ -20,6 +20,10 @@ std::string ProcessingArgumentsErrorCategory::message(int val) const {
             return "Unknown switcher";
         case ProcessingArgumentsError::WrongValueType:
             return "Provided value has wrong type";
+        case ProcessingArgumentsError::UnknownSubcommand:
+            return "Calling unknown subcomand";
+        case ProcessingArgumentsError::RequiredArgument:
+            return "Required argument";
     }
 }
 

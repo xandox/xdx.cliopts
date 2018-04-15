@@ -10,6 +10,8 @@ enum class ProcessingArgumentsError : int
     UnknonwSwitcher = 1,
     ExpectingValue = 2,
     WrongValueType = 3,
+    UnknownSubcommand = 4,
+    RequiredArgument = 5,
 };
 
 class ProcessingArgumentsErrorCategory : public std::error_category

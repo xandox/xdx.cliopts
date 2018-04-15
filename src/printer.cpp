@@ -21,7 +21,7 @@ void short_print_name(std::ostream& out, const Source& source) {
     }
 }
 
-void short_print_flag(std::ostream& out, const iOptions::FlagCPtr& flag) {
+void short_print_flag(std::ostream& out, const iOptions::FlagPtr& flag) {
     out << '[';
     short_print_name(out, flag);
     if (std::dynamic_pointer_cast<const FlagCount>(flag) != nullptr) {
@@ -33,7 +33,7 @@ void short_print_flag(std::ostream& out, const iOptions::FlagCPtr& flag) {
     out << ' ';
 }
 
-void short_print_argument(std::ostream& out, const iOptions::ArgumentCPtr& argument) {
+void short_print_argument(std::ostream& out, const iOptions::ArgumentPtr& argument) {
     if (!argument->is_required()) {
         out << '[';
     }
@@ -62,17 +62,19 @@ void Printer::print_short(std::ostream& out) {
         short_print_argument(out, opts_->get_argument(i));
     }
 
-    out << '[';
+    if (opts_->subcommands_count() > 0) {
+        out << '[';
 
-    for (size_t i = 0; i < opts_->subcommands_count(); ++i) {
-        const auto& o = opts_->get_subcommand(i);
-        if (i != 0) {
-            out << '|';
+        for (size_t i = 0; i < opts_->subcommands_count(); ++i) {
+            const auto& o = opts_->get_subcommand(i);
+            if (i != 0) {
+                out << '|';
+            }
+            out << o->get_name();
         }
-        out << o->get_name();
-    }
 
-    out << ']' << ' ';
+        out << ']';
+    };
 }
 
 namespace

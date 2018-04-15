@@ -14,6 +14,8 @@ struct iFlag
     virtual std::string_view get_description() const noexcept = 0;
     virtual bool is_countable() const noexcept = 0;
     virtual void set_found() noexcept = 0;
+    virtual bool is_set() const noexcept = 0;
+    virtual void reset_to_default() noexcept = 0;
 };
 
 class FlagBase : public iFlag
@@ -42,6 +44,9 @@ public:
     Flag(char short_name, const std::string_view& long_name, const std::string_view& description);
 
     void set_found() noexcept final;
+    bool is_set() const noexcept final;
+    void reset_to_default() noexcept final;
+
     bool is_countable() const noexcept {
         return false;
     }
@@ -57,6 +62,10 @@ public:
     FlagCount(char short_name, const std::string_view& description);
     FlagCount(char short_name, const std::string_view& long_name, const std::string_view& description);
     void set_found() noexcept final;
+    bool is_set() const noexcept final;
+    size_t get_count() const noexcept;
+    void reset_to_default() noexcept final;
+
     bool is_countable() const noexcept {
         return true;
     }

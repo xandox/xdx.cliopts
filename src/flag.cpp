@@ -47,6 +47,14 @@ void Flag::set_found() noexcept {
     was_ = true;
 }
 
+bool Flag::is_set() const noexcept {
+    return was_;
+}
+
+void Flag::reset_to_default() noexcept {
+    was_ = false;
+}
+
 FlagCount::FlagCount(const std::string_view& long_name, const std::string_view& description)
     : FlagBase{long_name, description} {
 }
@@ -61,6 +69,18 @@ FlagCount::FlagCount(char short_name, const std::string_view& long_name, const s
 
 void FlagCount::set_found() noexcept {
     was_ += 1;
+}
+
+bool FlagCount::is_set() const noexcept {
+    return was_ != 0;
+}
+
+size_t FlagCount::get_count() const noexcept {
+    return was_;
+}
+
+void FlagCount::reset_to_default() noexcept {
+    was_ = 0;
 }
 
 }  // namespace xdx::cliopts
