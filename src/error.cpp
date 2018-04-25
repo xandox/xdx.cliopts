@@ -25,6 +25,7 @@ std::string ProcessingArgumentsErrorCategory::message(int val) const {
         case ProcessingArgumentsError::RequiredArgument:
             return "Required argument";
     }
+    return "Unkown error";
 }
 
 std::error_code make_error_code(ProcessingArgumentsError error) {
